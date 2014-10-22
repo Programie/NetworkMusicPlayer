@@ -21,15 +21,6 @@ class UtilsTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($url, Utils::buildUrl($parsedUrl));
 	}
 
-	public function testBuildUrlHostNoScheme()
-	{
-		$url = "example.com";
-
-		$parsedUrl = parse_url($url);
-
-		$this->assertEquals("http://" . $url, Utils::buildUrl($parsedUrl));// "http" is the default scheme
-	}
-
 	public function testBuildUrlHost()
 	{
 		$url = "http://example.com";
