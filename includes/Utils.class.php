@@ -12,8 +12,11 @@ class Utils
 	 */
 	public static function buildUrl($url)
 	{
-		$scheme = $url["scheme"];
-		if (!$scheme)
+		if (isset($url["scheme"]) and $url["scheme"])
+		{
+			$scheme = $url["scheme"];
+		}
+		else
 		{
 			$scheme = "http";
 		}
@@ -52,15 +55,18 @@ class Utils
 			$fullUrl .= $url["port"];
 		}
 
-		$fullUrl .= $url["path"];
+		if (isset($url["path"]) and $url["path"])
+		{
+			$fullUrl .= $url["path"];
+		}
 
-		if ($url["query"])
+		if (isset($url["query"]) and $url["query"])
 		{
 			$fullUrl .= "?";
 			$fullUrl .= $url["query"];
 		}
 
-		if ($url["fragment"])
+		if (isset($url["fragment"]) and $url["fragment"])
 		{
 			$fullUrl .= "#";
 			$fullUrl .= $url["fragment"];
