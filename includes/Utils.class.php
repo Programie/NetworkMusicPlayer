@@ -179,7 +179,7 @@ class Utils
 	 */
 	public static function getTempFile($config)
 	{
-		return tempnam($config->getValue("paths.tempDir"), "BigBrother_");
+		return tempnam($config->getValue("paths.tempDir"), "NetworkMusicPlayer_");
 	}
 
 	/**
@@ -190,7 +190,7 @@ class Utils
 	public static function getUserAgent()
 	{
 		$curlVersion = curl_version();
-		return "MultimediaNetwork/" . self::getVersion() . " (curl/" . $curlVersion["version"] . ")";
+		return "NetworkMusicPlayer/" . self::getVersion() . " (curl/" . $curlVersion["version"] . ")";
 	}
 
 	/**
