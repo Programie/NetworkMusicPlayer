@@ -1,0 +1,13 @@
+{
+    "name": "programie/networkmusicplayer",
+    "description": "A network based music player",
+    "require-dev": {
+        "phpunit/phpunit": "~4.3"
+    },
+    "authors": [
+        {
+            "name": "Programie",
+            "email": "github@selfcoders.com"
+        }
+    ]
+}
