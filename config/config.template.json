@@ -1,0 +1,14 @@
+{
+	"database.dsn" :
+	{
+		"description" : "The data source name used to connect to the database."
+	},
+	"database.username" :
+	{
+		"description" : "The username used to connect to the database."
+	},
+	"database.password" :
+	{
+		"description" : "The password used to connect to the database."
+	}
+}
