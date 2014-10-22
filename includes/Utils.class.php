@@ -12,17 +12,14 @@ class Utils
 	 */
 	public static function buildUrl($url)
 	{
-		if (isset($url["scheme"]) and $url["scheme"])
+		$fullUrl = "";
+
+		if (!isset($url["scheme"]) or !$url["scheme"])
 		{
-			$scheme = $url["scheme"];
-		}
-		else
-		{
-			$scheme = "http";
+			return null;
 		}
 
-		$fullUrl = "";
-		$fullUrl .= $scheme;
+		$fullUrl .= $url["scheme"];
 		$fullUrl .= "://";
 
 		if (isset($url["user"]))
@@ -36,10 +33,15 @@ class Utils
 			$fullUrl .= "@";
 		}
 
+		if (!isset($url["host"]) or !$url["host"])
+		{
+			return null;
+		}
+
 		$fullUrl .= $url["host"];
 
 		$defaultPort = null;
-		switch ($scheme)
+		switch ($url["scheme"])
 		{
 			case "http":
 				$defaultPort = 80;
