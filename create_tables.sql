@@ -23,6 +23,7 @@ CREATE TABLE `tracks` (
   `diskNumber` int(11) DEFAULT NULL,
   `diskCount` int(11) DEFAULT NULL,
   `length` int(11) DEFAULT NULL,
+  `dateAdded` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `filePathHash` (`filePathHash`),
   KEY `title` (`title`(191)),

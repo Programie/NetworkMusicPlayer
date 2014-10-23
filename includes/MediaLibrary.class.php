@@ -169,7 +169,8 @@ class MediaLibrary
 			INSERT INTO `tracks`
 			SET
 				`filePath` = :filePath,
-				`filePathHash` = UNHEX(MD5(:filePath))
+				`filePathHash` = UNHEX(MD5(:filePath)),
+				`dateAdded` = NOW()
 		");
 
 		$query->execute(array
