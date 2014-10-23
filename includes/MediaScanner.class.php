@@ -17,6 +17,9 @@ class MediaScanner
 		$this->mediaLibrary = new MediaLibrary($this->config, $pdo);
 	}
 
+	/**
+	 * Perform a full scan of the configured media directory
+	 */
 	public function fullScan()
 	{
 		$this->scanDir($this->config->getValue("paths.media"));
