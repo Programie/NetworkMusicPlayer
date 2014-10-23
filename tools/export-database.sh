@@ -25,9 +25,9 @@ require tr
 
 echo "Reading configuration..."
 
-DSN=$(php ${TOOLSPATH}/getconfigvalue.php database.mainDb.dsn | sed 's/mysql:\(.*\)/\1/g')
-USERNAME="`php ${TOOLSPATH}/getconfigvalue.php database.mainDb.username`"
-PASSWORD="`php ${TOOLSPATH}/getconfigvalue.php database.mainDb.password`"
+DSN=$(php ${TOOLSPATH}/getconfigvalue.php database.dsn | sed 's/mysql:\(.*\)/\1/g')
+USERNAME="`php ${TOOLSPATH}/getconfigvalue.php database.username`"
+PASSWORD="`php ${TOOLSPATH}/getconfigvalue.php database.password`"
 
 echo "Parsing DSN '${DSN}'..."
 
