@@ -29,6 +29,9 @@ CREATE TABLE `tracks` (
   KEY `title` (`title`(191)),
   KEY `artist` (`artist`(191)),
   KEY `album` (`album`(191)),
-  KEY `filePath` (`filePath`(191))
+  KEY `filePath` (`filePath`(191)),
+  KEY `genre` (`genre`(191)),
+  KEY `year` (`year`),
+  KEY `dateAdded` (`dateAdded`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
