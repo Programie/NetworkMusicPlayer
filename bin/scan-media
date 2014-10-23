@@ -10,4 +10,11 @@ $dbConnection = new DBConnection($config);
 
 $mediaScanner = new MediaScanner($config, $dbConnection->getPdo());
 
-$mediaScanner->fullScan();
+if (isset($argv[1]))
+{
+	$mediaScanner->scanDir($argv[1]);
+}
+else
+{
+	$mediaScanner->fullScan();
+}
