@@ -5,14 +5,10 @@ class Logger
 	 * @var Config Instance of Config class
 	 */
 	public static $config;
-	/**
-	 * @var string The file in which log entries should be logged (null = stdout)
-	 */
-	public static $logFile = null;
 
 	public static function log($level, $message, $scope = "")
 	{
-		if ($level <= self::$config->getValue("logLevel"))
+		if ($level <= self::$config->getValue("log.level"))
 		{
 			switch ($level)
 			{
@@ -37,14 +33,7 @@ class Logger
 
 			$string = "[" . date("Y-m-d H:i:s") . "] [" . $level . "] [" . $scope . "] " . $message . "\n";
 
-			if (Logger::$logFile == null)
-			{
-				echo $string;
-			}
-			else
-			{
-				file_put_contents(Logger::$logFile, $string, FILE_APPEND);
-			}
+			file_put_contents(self::$config->getValue("log.file"), $string, FILE_APPEND);
 		}
 	}
 

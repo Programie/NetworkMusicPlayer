@@ -150,26 +150,6 @@ class Utils
 	}
 
 	/**
-	 * Enables custom error logging
-	 *
-	 * @param Config $config Instance of the Config class
-	 * @param string $name The name of the log file without file extension (e.g. "daemon" will log to "daemon.error.log")
-	 * @param bool $allToFile Whether to log all entries to a file
-	 */
-	public static function initLogger($config, $name, $allToFile = false)
-	{
-		$logFile = $config->getValue("paths.logs") . "/" . $name . ".error.log";
-
-		ini_set("log_errors", true);
-		ini_set("ignore_repeated_errors", true);
-		ini_set("report_memleaks", true);
-		ini_set("error_log", $logFile);
-
-		Logger::$config = $config;
-		Logger::$logFile = $allToFile ? $logFile : null;
-	}
-
-	/**
 	 * Returns the root URL (e.g. http://example.com or https://sub.example.com:8443)
 	 *
 	 * @return string The URL
