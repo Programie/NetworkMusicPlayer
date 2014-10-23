@@ -10,5 +10,9 @@
 	"database.password" :
 	{
 		"description" : "The password used to connect to the database."
+	},
+	"paths.media" :
+	{
+		"description" : "The path where you media is stored."
 	}
 }
