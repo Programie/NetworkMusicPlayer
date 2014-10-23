@@ -1,6 +1,7 @@
 {
     "name": "programie/networkmusicplayer",
     "description": "A network based music player",
+
     "require-dev": {
         "phpunit/phpunit": "~4.3"
     },
@@ -9,5 +10,8 @@
             "name": "Programie",
             "email": "github@selfcoders.com"
         }
-    ]
+    ],
+    "require": {
+        "james-heinrich/getid3": "~1.9"
+    }
 }

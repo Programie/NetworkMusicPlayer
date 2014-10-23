@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/MediaLibrary.class.php";
+
 class MediaScanner
 {
 	/**
@@ -40,17 +42,26 @@ class MediaScanner
 				continue;
 			}
 
-			if (is_dir($path . "/" . $item))
+			$filePath = $path . "/" . $item;
+
+			if (is_dir($filePath))
 			{
-				$this->scanDir($path . "/" . $item);
+				$this->scanDir($filePath);
 				continue;
 			}
 
-			if (is_file($path . "/" . $item))
+			if (is_file($filePath))
 			{
-				// TODO: Check if this is a valid media file (e.g. mp3)
-				// TODO: Retrieve ID3 tag data from file
-				// TODO: Add track to library using $this->mediaLibrary->addTrack()
+				$trackId = $this->mediaLibrary->getTrackIdByFilePath($filePath);
+				if ($trackId)
+				{
+					continue;
+				}
+
+				if ($this->mediaLibrary->addTrack($filePath) == null)
+				{
+					Logger::error("Unable to add '" . $filePath . "'!", "MediaScanner/scanDir");
+				}
 			}
 		}
 	}

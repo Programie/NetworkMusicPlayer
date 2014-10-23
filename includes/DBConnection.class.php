@@ -24,6 +24,7 @@ class DBConnection
 			$this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
 			$this->pdo->query("SET NAMES utf8");
+			$this->pdo->query("SET CHARACTER SET utf8");
 			$this->pdo->query("SET sql_mode='ANSI,TRADITIONAL'");// Required for some queries using GROUP BY
 		}
 		catch (PDOException $exception)
