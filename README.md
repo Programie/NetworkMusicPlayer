@@ -20,9 +20,9 @@ Network Music Player is split into a few components which are connected via your
 
 The server provides a central database for all players. Every player connects to the server and requests the library/playlists and audio stream from it.
 
-Data like the library or track information is requested using JSON-RPC over HTTP. The music gets also streamed via HTTP.
+Clients request data like track information or the audio stream from the server using an REST API.
 
-This way, it's easy to access your whole music collection from any (internet connected) place on the world.
+In this way, it's easy to access your whole music collection from any (internet connected) place on the world.
 
 ### Player
 
