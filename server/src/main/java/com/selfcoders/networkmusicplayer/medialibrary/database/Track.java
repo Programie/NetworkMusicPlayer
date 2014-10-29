@@ -1,12 +1,11 @@
 package com.selfcoders.networkmusicplayer.medialibrary.database;
 
 import com.selfcoders.networkmusicplayer.medialibrary.MediaMetadata;
-import java.io.File;
-import java.io.IOException;
-
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import java.io.IOException;
 
 public class Track {
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -42,7 +41,7 @@ public class Track {
 
         MediaMetadata metadata = new MediaMetadata();
 
-        if (!metadata.readMetadata(new File(filePath))) {
+        if (!metadata.readMetadata(filePath)) {
             return false;
         }
 

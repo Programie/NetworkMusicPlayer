@@ -1,12 +1,6 @@
 package com.selfcoders.networkmusicplayer.medialibrary;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.tika.Tika;
@@ -21,6 +15,13 @@ import org.apache.tika.parser.mp3.Mp3Parser;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class MediaMetadata {
     public static final Logger LOGGER = LogManager.getLogger(MediaMetadata.class);
@@ -102,10 +103,10 @@ public class MediaMetadata {
         return true;
     }
 
-    public boolean readMetadata(File file) throws IOException {
-        LOGGER.debug("Reading meta data of '" + file.getAbsolutePath() + "'");
+    public boolean readMetadata(String filePath) throws IOException {
+        LOGGER.debug("Reading meta data of '" + filePath + "'");
 
-        InputStream inputStream = new FileInputStream(file);
+        InputStream inputStream = new FileInputStream(filePath);
 
         boolean success = readMetadata(inputStream);
 

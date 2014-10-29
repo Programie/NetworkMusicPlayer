@@ -1,11 +1,17 @@
 package com.selfcoders.networkmusicplayer.medialibrary;
 
 import com.selfcoders.networkmusicplayer.medialibrary.database.Track;
-import java.io.File;
-import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 public class MediaScanner {
     public static final Logger LOGGER = LogManager.getLogger(MediaScanner.class);
@@ -16,28 +22,29 @@ public class MediaScanner {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void scan(String path) {
-        File directory = new File(path);
+    private class FileWalker extends SimpleFileVisitor<Path> {
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
+            addFile(file);
 
-        File[] fileList = directory.listFiles();
-
-        if (fileList == null) {
-            return;
-        }
-
-        for (File file : fileList) {
-            if (file.isDirectory()) {
-                scan(file.getAbsolutePath());
-            } else {
-                addFile(file);
-            }
+            return FileVisitResult.CONTINUE;
         }
     }
 
-    private boolean addFile(File file) {
+    public void scan(String path) {
+        try {
+            Files.walkFileTree(FileSystems.getDefault().getPath(path), new FileWalker());
+        } catch (IOException e) {
+            LOGGER.error("Error while scanning media dir", e);
+        }
+    }
+
+    private boolean addFile(Path file) {
         MediaMetadata metadata;
 
-        String filePath = file.getAbsolutePath();
+        String filePath = file.toAbsolutePath().toString();
+
+        LOGGER.debug("Adding file '" + filePath + "'");
 
         Track track = new Track(jdbcTemplate);
         Integer trackId = track.getTrackIdByFilePath(filePath);
@@ -49,7 +56,7 @@ public class MediaScanner {
 
         try {
             metadata = new MediaMetadata();
-            if (!metadata.readMetadata(file)) {
+            if (!metadata.readMetadata(filePath)) {
                 return false;
             }
         } catch (IOException e) {
@@ -67,6 +74,8 @@ public class MediaScanner {
         }
 
         track.updateTrackData(trackId, metadata);
+
+        LOGGER.debug("File successfully added");
 
         return true;
     }
