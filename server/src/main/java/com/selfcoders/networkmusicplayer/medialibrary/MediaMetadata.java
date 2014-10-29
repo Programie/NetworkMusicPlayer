@@ -76,11 +76,16 @@ public class MediaMetadata {
         }
 
         Integer releaseYear = null;
-        Date releaseDate = metadata.getDate(XMPDM.RELEASE_DATE);
-        if (releaseDate != null) {
-            Calendar releaseCalendarDate = new GregorianCalendar();
-            releaseCalendarDate.setTime(releaseDate);
-            releaseYear = releaseCalendarDate.get(Calendar.YEAR) - 1900;
+        String releaseDateString = metadata.get(XMPDM.RELEASE_DATE);
+
+        // Fix for StringIndexOutOfBoundsException in org.apache.tika.metadata.Metadata.parseDate(Metadata.java:134)
+        if (releaseDateString != null && !releaseDateString.isEmpty() && releaseDateString.length() >= 3) {
+            Date releaseDate = metadata.getDate(XMPDM.RELEASE_DATE);
+            if (releaseDate != null) {
+                Calendar releaseCalendarDate = new GregorianCalendar();
+                releaseCalendarDate.setTime(releaseDate);
+                releaseYear = releaseCalendarDate.get(Calendar.YEAR) - 1900;
+            }
         }
 
         title = metadata.get(TikaCoreProperties.TITLE);
@@ -98,6 +103,8 @@ public class MediaMetadata {
     }
 
     public boolean readMetadata(File file) throws IOException {
+        LOGGER.debug("Reading meta data of '" + file.getAbsolutePath() + "'");
+
         InputStream inputStream = new FileInputStream(file);
 
         boolean success = readMetadata(inputStream);
