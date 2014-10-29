@@ -18,12 +18,14 @@ Network Music Player is split into a few components which are connected via your
 
 ### Server
 
-The server provides a central database for all players. Every player connects to the server and requests the library/playlists and audio stream from it.
+The server provides a central database for all players. Every player connects to the server and requests the library/playlists and audio stream from it using the REST API.
 
-Clients request data like track information or the audio stream from the server using an REST API.
-
-In this way, it's easy to access your whole music collection from any (internet connected) place on the world.
+In this way, it's easy to access your whole music collection from any (internet connected) place on the world. You just have to forward the HTTP port.
 
 ### Player
 
-The player connects to the server and simply plays the media in the library.
+The player connects to the server and plays the media in the library.
+
+### Web interface
+
+The web interface is used to manage your whole media library. This includes creating (smart) playlists, edit meta data or manage the files (e.g. delete or reorganize).
