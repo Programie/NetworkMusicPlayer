@@ -1,7 +1,8 @@
 /config/config.json
 
+*.iml
 .idea
+target
 
 .AppleDouble
 .DS_Store
-/vendor/
