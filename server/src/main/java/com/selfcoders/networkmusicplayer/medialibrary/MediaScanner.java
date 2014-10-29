@@ -22,6 +22,9 @@ public class MediaScanner {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Class used to walk the file tree while scanning for files
+     */
     private class FileWalker extends SimpleFileVisitor<Path> {
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) {
@@ -31,6 +34,10 @@ public class MediaScanner {
         }
     }
 
+    /**
+     * Scan the specified folder recursively for new media
+     * @param path The path were to start scanning
+     */
     public void scan(String path) {
         try {
             Files.walkFileTree(FileSystems.getDefault().getPath(path), new FileWalker());
@@ -39,6 +46,11 @@ public class MediaScanner {
         }
     }
 
+    /**
+     * Add the specified file to the library (if not already existing)
+     * @param file The file to add
+     * @return true if the file has been added successfully (or already exists), false on error
+     */
     private boolean addFile(Path file) {
         MediaMetadata metadata;
 

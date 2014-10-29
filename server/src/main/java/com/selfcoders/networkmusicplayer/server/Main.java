@@ -21,7 +21,12 @@ public class Main {
 
         new Server(configProperties);
     }
-    
+
+    /**
+     * Load the configuration from file in standard properties format
+     * @param configurationFilePath The path of the configuration file
+     * @return true on success, false on error
+     */
     public boolean loadConfig(String configurationFilePath) {
         configProperties = new Properties();
 

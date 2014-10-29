@@ -25,7 +25,7 @@ public class Server {
 
         String mediaDir = configuration.getProperty("mediadir");
         if (mediaDir != null) {
-            mediaScanner.scan(mediaDir);
+            mediaScanner.scan(mediaDir);// TODO: Should run automatically in a configured interval or if specified by a command line argument
         }
     }
 }

@@ -37,6 +37,12 @@ public class MediaMetadata {
     public Integer diskCount;
     public Integer length;
 
+    /**
+     * Read the metadata from the given input stream and write it to the public properties like title or artist
+     * @param inputStream The input stream to use
+     * @return true if successfully parsed, false on error
+     * @throws IOException
+     */
     public boolean readMetadata(InputStream inputStream) throws IOException {
         Tika tika = new Tika();
         String mediaType = tika.detect(inputStream);
@@ -103,6 +109,12 @@ public class MediaMetadata {
         return true;
     }
 
+    /**
+     * Read the metadata from the given file (See readMetadata(InputStream inputStream) for details)
+     * @param filePath The path to the file
+     * @return true if successfully parsed, false on error
+     * @throws IOException
+     */
     public boolean readMetadata(String filePath) throws IOException {
         LOGGER.debug("Reading meta data of '" + filePath + "'");
 

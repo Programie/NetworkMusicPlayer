@@ -14,6 +14,11 @@ public class Track {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Get the track ID by the specified file path
+     * @param filePath The absolute file path
+     * @return The ID of the track or null if not found
+     */
     public Integer getTrackIdByFilePath(String filePath) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("filePath", filePath);
@@ -25,6 +30,11 @@ public class Track {
         }
     }
 
+    /**
+     * Get the file path of the track specified by the given ID
+     * @param trackId The ID of the track
+     * @return The file path of the track or null if not found
+     */
     public String getFilePathByTrackId(int trackId) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("id", trackId);
@@ -36,6 +46,12 @@ public class Track {
         }
     }
 
+    /**
+     * Update the metadata from file of the track specified by the given ID
+     * @param trackId The ID of the track
+     * @return true on successfully update, false on error
+     * @throws IOException
+     */
     public boolean updateTrackData(int trackId) throws IOException {
         String filePath = this.getFilePathByTrackId(trackId);
 
@@ -48,6 +64,12 @@ public class Track {
         return updateTrackData(trackId, metadata);
     }
 
+    /**
+     * Update the metadata of the track specified by the given ID
+     * @param trackId The ID of the track
+     * @param metadata The metadata which should be used for the given track
+     * @return true on successfully update, false on error
+     */
     public boolean updateTrackData(int trackId, MediaMetadata metadata) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("title", metadata.title);
@@ -80,6 +102,11 @@ public class Track {
         return true;
     }
 
+    /**
+     * Add a new track with the specified file path
+     * The metadata won't be added!
+     * @param filePath The path to the file of the track
+     */
     public void addTrack(String filePath) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("filePath", filePath);
