@@ -1,5 +1,1 @@
-language: php
-php:
-  - 5.4
-install:
-  - composer install
+language: java
