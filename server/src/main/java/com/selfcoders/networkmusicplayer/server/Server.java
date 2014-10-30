@@ -21,6 +21,13 @@ public class Server {
 
         NamedParameterJdbcTemplate jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
+        HttpServer httpServer = new HttpServer(Integer.valueOf(configuration.getProperty("httpport", "8090")));
+        httpServer.setupService();
+
+        if (Boolean.valueOf(configuration.getProperty("webinterface", "1"))) {
+            httpServer.setupWebinterface();
+        }
+
         MediaScanner mediaScanner = new MediaScanner(jdbcTemplate);
 
         String mediaDir = configuration.getProperty("mediadir");
