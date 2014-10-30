@@ -24,6 +24,9 @@ public class HttpServer {
         server.setHandler(contexts);
     }
 
+    /**
+     * Setup the REST service and add the servlet context to the server
+     */
     public void setupService() {
         ResourceConfig resourceConfig = new ResourceConfig();
         resourceConfig.packages("com.selfcoders.networkmusicplayer.server.rest");
@@ -37,6 +40,9 @@ public class HttpServer {
         handlers.add(context);
     }
 
+    /**
+     * Setup the web interface and add the servlet context to the server
+     */
     public void setupWebinterface() {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath(WEBINTERFACE_PATH);

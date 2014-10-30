@@ -23,6 +23,10 @@ public class HttpStreamBuilder {
         this.chunkSize = chunkSize;
     }
 
+    /**
+     * Build a response which returns the complete data of the file
+     * @return The built response object
+     */
     public Response build() {
         StreamingOutput streamer = new StreamingOutput() {
             @Override
@@ -39,34 +43,46 @@ public class HttpStreamBuilder {
             }
         };
 
-        return Response.ok(streamer).status(200).header(HttpHeaders.CONTENT_LENGTH, file.length()).build();
+        // Build the response
+        return Response.ok(streamer)
+                .status(200)
+                .header(HttpHeaders.CONTENT_LENGTH, file.length())
+                .build();
     }
 
+    /**
+     * Build a response which returns the specified data range of the file
+     * @param range The data range (e.g. specified by "Range" HTTP header), use null to return the complete data of the file
+     * @return The built response object
+     * @throws IOException
+     */
     public Response build(final String range) throws IOException {
         if (range == null) {
             return this.build();
         }
 
         String[] ranges = range.split("=")[1].split("-");
-        final int from = Integer.parseInt(ranges[0]);
 
-        int to = chunkSize + from;
+        int rangeStart = Integer.parseInt(ranges[0]);
+        int rangeEnd = chunkSize + rangeStart;
 
-        if (to >= file.length()) {
-            to = (int) (file.length() - 1);
-        }
-
+        // Set the range end if specified
         if (ranges.length == 2) {
-            to = Integer.parseInt(ranges[1]);
+            rangeEnd = Integer.parseInt(ranges[1]);
         }
 
-        final String responseRange = String.format("bytes %d-%d/%d", from, to, file.length());
-        final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
-        randomAccessFile.seek(from);
+        // Specified range end is greater or equal the length of the file
+        if (rangeEnd >= file.length()) {
+            rangeEnd = (int) (file.length() - 1);
+        }
 
-        final int length = to - from + 1;
+        final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+        randomAccessFile.seek(rangeStart);
+
+        // Create an output streamer which returns the specified data range to the client
+        final int length = rangeEnd - rangeStart + 1;
         final byte[] buffer = new byte[4096];
-        final StreamingOutput streamer = new StreamingOutput() {
+        StreamingOutput streamer = new StreamingOutput() {
             @Override
             public void write(OutputStream outputStream) throws IOException, WebApplicationException {
                 int remaining = length;
@@ -88,13 +104,13 @@ public class HttpStreamBuilder {
 
         randomAccessFile.close();
 
-        Response.ResponseBuilder response = Response.ok(streamer)
+        // Build the response
+        return Response.ok(streamer)
                 .status(206)
                 .header("Accept-Ranges", "bytes")
-                .header("Content-Range", responseRange)
+                .header("Content-Range", String.format("bytes %d-%d/%d", rangeStart, rangeEnd, file.length()))
                 .header(HttpHeaders.CONTENT_LENGTH, length)
-                .header(HttpHeaders.LAST_MODIFIED, new Date(file.lastModified()));
-
-        return response.build();
+                .header(HttpHeaders.LAST_MODIFIED, new Date(file.lastModified()))
+                .build();
     }
 }
