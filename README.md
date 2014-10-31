@@ -2,7 +2,7 @@
 
 ## What is it?
 
-Network Music Player (or NMP for short) is a network based music manager and player.
+Network Music Player (or NMP for short) is a network based cross platform music manager and player.
 
 The difference between Network Music Player and other music players: The media library and all the music files are stored on a central server with a SQL database. Your whole music library can be searched using SQL!
 
@@ -24,7 +24,7 @@ In this way, it's easy to access your whole music collection from any (internet 
 
 ### Player
 
-The player connects to the server and plays the media in the library.
+The player connects to the server and plays the media in the library. A player could be your media center (e.g. an addon for XBMC/Kodi). Even DLNA support is planed!
 
 ### Web interface
 
